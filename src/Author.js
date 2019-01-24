@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './bootstrap.min.css';
-
+import PropTypes from 'prop-types';
 
 function Hero(){
   return (<div className="row">
@@ -14,23 +14,47 @@ function Hero(){
   </div>);
 }
 
-function Turn({author,books}){
+function Turn({author,books,highlight,onAnswerSelected}){
 
-  return (<div className="row turn" style={{backgroundColor:"white"}}>
+    function highlightToBgColor(highlight){
+        const mapping={
+            'none':'',
+            'correct':'green',
+            'wrong':'red'
+        };
+        return mapping[highlight];
+    }
+
+    console.log(highlightToBgColor(highlight));
+  return (<div className="row turn" style={{backgroundColor:highlightToBgColor(highlight)}}>
 <div className="col-4 offset-1">
   <img className="authorimage" alt="Author" src={author.imageURL} />
 </div>
 
     <div className="col-6">
-        {books.map( (title) => <Book title={title} key={title}/>)}
+        {books.map( (title) => <Book title={title} key={title} onClick={onAnswerSelected}/>)}
     </div>
   </div>);
 
 }
 
-function Book({title})
+Turn.propTypes={
+    author:PropTypes.shape({
+        name:PropTypes.string.isRequired,
+        imageUrl:PropTypes.string.isRequired,
+        imageSource:PropTypes.string.isRequired,
+        books:PropTypes.arrayOf(PropTypes.string).isRequired
+    }),
+    books:PropTypes.arrayOf(PropTypes.string).isRequired,
+    onAnswerSelected:PropTypes.func.isRequired,
+    highlight:PropTypes.string.isRequired
+}
+
+
+
+function Book({title,onClick})
 {
-return (<div className="answer" >
+return (<div className="answer" onClick={()=> { onClick(title);}} >
 <h4>{title}</h4>
   <hr/>
 </div>)
@@ -58,12 +82,12 @@ function Footer(){
 
 
 
-function Author({turnData})  {
+function Author({turnData,highlight,onAnswerSelected})  {
       return (
 
     <div className="container-fluid">
       <Hero/>
-      <Turn {...turnData} />
+      <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
       <Continue/>
       <Footer/>
     </div>

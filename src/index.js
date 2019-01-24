@@ -44,13 +44,25 @@ return {
 }
 
 const state={
-    turnData: getTurnData(authors)
+    turnData: getTurnData(authors),
+    highlight:''
+};
+
+
+function onAnswerSelected(answer) {
+
+    const isCorrect=state.turnData.author.books.some((book)=>book===answer);
+    state.highlight=isCorrect?'correct':'wrong';
+    render();
 }
 
+function render(){
+    ReactDOM.render(<Author {...state}  onAnswerSelected={onAnswerSelected}/>, document.getElementById('root'));
+}
+
+render();
 
 
-
-ReactDOM.render(<Author {...state} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
