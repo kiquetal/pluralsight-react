@@ -28,8 +28,7 @@ describe("Author Quiz",()=>{
   })
 });
 
-describe("When no answer has been selected",()=>{
-    let wrapper;
+describe("When no answer has been selected",()=>{let wrapper;
     beforeAll(()=>{
         wrapper=mount(<Author {...state} onAnswerSelected={()=>{}}/>);
     });
@@ -40,5 +39,12 @@ describe("When no answer has been selected",()=>{
 });
 describe("When selected the wrong answer",()=>{
 
+    let wrapper;
+    beforeAll(()=>{
+        wrapper=mount(<Author {...(Object.assign({},state,{highlight:'wrong'}))} onAnswerSelected={()=>{}} />)
+    })
 
+    it("should have a red background color",()=>{
+        expect(wrapper.find('div.row.turn').props().style.backgroundColor).toBe('red');
+    })
 })
