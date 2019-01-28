@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import {Link} from 'react-router-dom';
 import './bootstrap.min.css';
 import PropTypes from 'prop-types';
 
@@ -70,12 +71,8 @@ function Footer() {
         <div className="col-12">
             <p className="text-muted credit">
                 All images are from <a href="http://commons.wikimedia.org/wiki"/>
-
             </p>
-
-
         </div>
-
     </div>);
 }
 
@@ -87,6 +84,7 @@ function Author({turnData, highlight, onAnswerSelected}) {
             <Hero/>
             <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
             <Continue/>
+            <p><Link to="/add">Add Author</Link></p>
             <Footer/>
         </div>
     );

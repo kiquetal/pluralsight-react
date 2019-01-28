@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {BrowserRouter,Route} from 'react-router-dom';
+import {BrowserRouter,Route,Link} from 'react-router-dom';
 import Author from './Author';
+import AuthorFrom from './AddAuthorForm';
 import * as serviceWorker from './serviceWorker';
 import {shuffle,sample} from 'underscore';
 
@@ -62,24 +63,21 @@ function onAnswerSelected(answer) {
     state.highlight=isCorrect?'correct':'wrong';
     render();
 }
+function AuthorWrapper(){
+    return  <AuthorFrom onAddAuthorForm={console.log}/>
+}
 
 function render(){
     ReactDOM.render(
         <BrowserRouter>
             <React.Fragment>
         <Route exact path="/" component={App}  />
-        <Route path="/add" component={AddAuthorForm}/>
+        <Route path="/add" component={AuthorWrapper}/>
             </React.Fragment>
     </BrowserRouter>, document.getElementById('root'));
 }
 
-function AddAuthorForm({match})
-{
-    return <div>
-        <h1>Addd Author</h1>
-        <p>{JSON.stringify(match)}</p>
-    </div>
-}
+
 
 
 render();
