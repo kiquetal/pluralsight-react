@@ -40,7 +40,7 @@ function Turn({author, books, highlight, onAnswerSelected}) {
 
 Turn.propTypes = {
     author: PropTypes.shape({
-        
+
         name: PropTypes.string.isRequired,
         imageURL: PropTypes.string.isRequired,
         books: PropTypes.arrayOf(PropTypes.string).isRequired
