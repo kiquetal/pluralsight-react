@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {BrowserRouter,Route,Link} from 'react-router-dom';
+
+import {BrowserRouter,Route,withRouter} from 'react-router-dom';
 import Author from './Author';
 import AuthorFrom from './AddAuthorForm';
 import * as serviceWorker from './serviceWorker';
@@ -45,15 +46,23 @@ return {
     }
 }
 
-const state={
-    turnData: getTurnData(authors),
-    highlight:''
-};
+function resetSate(){
+    return {
+        turnData: getTurnData(authors),
+        highlight:''
+    };
+}
+
+let state=resetSate();
 
 
 function App(){
 
-    return <Author {...state}  onAnswerSelected={onAnswerSelected}/>;
+    return <Author {...state}  onAnswerSelected={onAnswerSelected}
+    onContinue={()=>{
+    state=resetSate();
+    render()}
+    }/>;
 }
 
 
@@ -63,9 +72,12 @@ function onAnswerSelected(answer) {
     state.highlight=isCorrect?'correct':'wrong';
     render();
 }
-function AuthorWrapper(){
-    return  <AuthorFrom onAddAuthorForm={console.log}/>
-}
+const AuthorWrapper=withRouter(({history}) => {
+    return  <AuthorFrom onAddAuthorForm={(author)=>{
+    authors.push(author);
+    history.push('/');
+    } }/>
+});
 
 function render(){
     ReactDOM.render(

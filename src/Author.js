@@ -40,9 +40,9 @@ function Turn({author, books, highlight, onAnswerSelected}) {
 
 Turn.propTypes = {
     author: PropTypes.shape({
+        
         name: PropTypes.string.isRequired,
-        imageUrl: PropTypes.string.isRequired,
-        imageSource: PropTypes.string.isRequired,
+        imageURL: PropTypes.string.isRequired,
         books: PropTypes.arrayOf(PropTypes.string).isRequired
     }),
     books: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -60,9 +60,17 @@ function Book({title, onClick}) {
     </div>)
 }
 
-function Continue() {
+function Continue({show,onContinue}) {
 
-    return (<div/>)
+    return (<div className="row continue">
+            {
+                show?<div className="col-11">
+                  <button className="btn btn-primary btn-lg float-right" onClick={onContinue}>Continue</button>
+                </div>:null
+            }
+
+    </div>
+    );
 
 }
 
@@ -77,13 +85,13 @@ function Footer() {
 }
 
 
-function Author({turnData, highlight, onAnswerSelected}) {
+function Author({turnData, highlight, onAnswerSelected,onContinue}) {
     return (
 
         <div className="container-fluid">
             <Hero/>
             <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
-            <Continue/>
+            <Continue show={highlight==='correct'} onContinue={onContinue}/>
             <p><Link to="/add">Add Author</Link></p>
             <Footer/>
         </div>

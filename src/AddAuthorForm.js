@@ -8,7 +8,7 @@ class AuthorForm extends  React.Component{
         super(props);
         this.state={
             name:'',
-            imageurl:'',
+            imageURL:'',
             books:[],
             bookTemp:''
         }
@@ -43,7 +43,7 @@ class AuthorForm extends  React.Component{
             </div>
             <div className="AddAuthorForm__input">
                 <label htmlFor="imageurl">Image url </label>
-                <input type="text" name="imageurl" value={this.state.imageurl} onChange={this.onFieldChange}/>
+                <input type="text" name="imageURL" value={this.state.imageURL} onChange={this.onFieldChange}/>
             </div>
             <div className="AddAuthorForm__input">
                 <label htmlFor="bookTemp">Books </label>
