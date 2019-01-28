@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './bootstrap.min.css';
 import PropTypes from 'prop-types';
+
 
 function Hero() {
     return (<div className="row">

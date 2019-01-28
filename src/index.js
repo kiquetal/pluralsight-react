@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {BrowserRouter,Route} from 'react-router-dom';
 import Author from './Author';
 import * as serviceWorker from './serviceWorker';
 import {shuffle,sample} from 'underscore';
@@ -49,6 +50,13 @@ const state={
 };
 
 
+function App(){
+
+    return <Author {...state}  onAnswerSelected={onAnswerSelected}/>;
+}
+
+
+
 function onAnswerSelected(answer) {
     const isCorrect=state.turnData.author.books.some((book)=>book===answer);
     state.highlight=isCorrect?'correct':'wrong';
@@ -56,8 +64,23 @@ function onAnswerSelected(answer) {
 }
 
 function render(){
-    ReactDOM.render(<Author {...state}  onAnswerSelected={onAnswerSelected}/>, document.getElementById('root'));
+    ReactDOM.render(
+        <BrowserRouter>
+            <React.Fragment>
+        <Route exact path="/" component={App}  />
+        <Route path="/add" component={AddAuthorForm}/>
+            </React.Fragment>
+    </BrowserRouter>, document.getElementById('root'));
 }
+
+function AddAuthorForm({match})
+{
+    return <div>
+        <h1>Addd Author</h1>
+        <p>{JSON.stringify(match)}</p>
+    </div>
+}
+
 
 render();
 
